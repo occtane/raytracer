@@ -1,3 +1,6 @@
+#include "color.h"
+#include "vec3.h"
+
 #include <iostream>
 
 int main()
@@ -17,15 +20,8 @@ int main()
         {
             // Cast each pixel (i and j) into double and divide it by 255.
             // This way we get a range from 0.0 and 1.0 for the colors.
-            auto r = double(i) / (image_width - 1);
-            auto g = double(j) / (image_height - 1);
-            auto b = 0.0;
-
-            int ir = int(255.999 * r);
-            int ig = int(255.999 * g);
-            int ib = int(255.999 * b);
-
-            std::cout << ir << ' ' << ig << ' ' << ib << '\n';
+            auto pixel_color = color(double(i) / (image_width - 1), double(j) / (image_height - 1), 0);
+            write_color(std::cout, pixel_color);
         }
     }
 
