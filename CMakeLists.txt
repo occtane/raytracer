@@ -6,3 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(src)
 
+target_include_directories(${PROJECT_NAME}
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
