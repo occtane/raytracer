@@ -1,15 +1,95 @@
 {
   "version": 8,
   "configurePresets": [
+
+    {
+      "name": "base",
+      "hidden": true,
+      "binaryDir": "${sourceDir}/build/${presetName}"
+    },
+
     {
       "name": "clang",
-      "displayName": "Clang",
-      "binaryDir": "${sourceDir}/build",
+      "hidden": true,
+      "inherits": "base",
+      "generator": "Ninja",
       "cacheVariables": {
         "CMAKE_C_COMPILER": "/usr/bin/clang",
-        "CMAKE_CXX_COMPILER": "/usr/bin/clang++",
+        "CMAKE_CXX_COMPILER": "/usr/bin/clang++"
+      }
+    },
+
+    {
+      "name": "msvc",
+      "hidden": true,
+      "inherits": "base",
+      "generator": "Visual Studio 17 2022"
+    },
+
+    {
+      "name": "clang-debug",
+      "displayName": "Clang Debug",
+      "inherits": "clang",
+      "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
       }
+    },
+
+    {
+      "name": "clang-release",
+      "displayName": "Clang Release",
+      "inherits": "clang",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+
+    {
+      "name": "clang-relwithdebinfo",
+      "displayName": "Clang Release + Debug Info",
+      "inherits": "clang",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+      }
+    },
+
+    {
+      "name": "clang-asan",
+      "displayName": "Clang AddressSanitizer",
+      "inherits": "clang-debug",
+      "cacheVariables": {
+        "CMAKE_C_FLAGS": "-fsanitize=address -fno-omit-frame-pointer",
+        "CMAKE_CXX_FLAGS": "-fsanitize=address -fno-omit-frame-pointer"
+      }
+    },
+
+    {
+      "name": "clang-ubsan",
+      "displayName": "Clang UndefinedBehaviorSanitizer",
+      "inherits": "clang-debug",
+      "cacheVariables": {
+        "CMAKE_C_FLAGS": "-fsanitize=undefined",
+        "CMAKE_CXX_FLAGS": "-fsanitize=undefined"
+      }
+    },
+
+    {
+      "name": "msvc-debug",
+      "displayName": "MSVC Debug",
+      "inherits": "msvc",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+
+    {
+      "name": "msvc-release",
+      "displayName": "MSVC Release",
+      "inherits": "msvc",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
     }
+
   ]
 }
