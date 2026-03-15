@@ -4,13 +4,13 @@
 
 #include <iostream>
 
-double hit_sphere(const point3 &center, double radius, const ray &r)
+double hit_sphere(const point3& center, double radius, const ray& r)
 {
 	vec3 oc = center - r.origin();
-	auto a = dot(r.direction(), r.direction());
-	auto b = -2.0 * dot(r.direction(), oc);
-	auto c = dot(oc, oc) - radius * radius;
-	auto discriminant = b * b - 4 * a * c;
+	auto a = r.direction().length_squared();
+	auto b = dot(r.direction(), oc);
+	auto c = oc.length_squared() - radius * radius;
+	auto discriminant = h * h - a * c;
 
 	if (discriminant < 0)
 	{
@@ -18,11 +18,11 @@ double hit_sphere(const point3 &center, double radius, const ray &r)
 	}
 	else
 	{
-		return (-b - std::sqrt(discriminant)) / (2.0 * a);
+		return (h - std::sqrt(discriminant)) / a;
 	}
 }
 
-color ray_color(const ray &r)
+color ray_color(const ray& r)
 {
 	auto t = hit_sphere(point3(0, 0, -1), 0.5, r);
 	if (t > 0.0)
@@ -67,7 +67,7 @@ int main()
 
 	// Render
 	std::cout << "P3\n"
-			  << image_width << ' ' << image_height << "\n255\n";
+		<< image_width << ' ' << image_height << "\n255\n";
 
 	for (int j = 0; j < image_height; ++j)
 	{
